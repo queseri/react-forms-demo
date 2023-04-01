@@ -36,7 +36,14 @@ function App() {
   const onChange = (evt: { target: { name: any; value: any } }) => {
     const { name, value } = evt.target;
     console.log(evt.target);
-    setFormData({ ...formData, [name]: value });
+    // setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      senderAddress: {
+        ...formData.senderAddress,
+        [name]: value,
+      },
+    });
   };
 
   const {
