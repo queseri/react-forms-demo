@@ -21,10 +21,7 @@ function Inputs(props: {
         type={props.type}
         id={props.id}
         className={`input ${props.inputClass}`}
-        placeholder={props.placeholder}
-        value={props.value}
-        onChange={props.onChange}
-       name={props.name}
+        placeholder={props.placeholder}      
       />
     </div>
   );
