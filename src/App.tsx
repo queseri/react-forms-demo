@@ -41,7 +41,6 @@ function App() {
   } = useForm({ defaultValues: initialState });
   const [formData, setFormData] = useState(initialState);
 
-  /*
   const onChange = (evt: {
     target: { name: any; value: any; dataset: any };
   }) => {
@@ -68,7 +67,7 @@ function App() {
     // clientAddress: { street, city, country, postCode },
   } = formData;
   console.log(street);
-*/
+
   return (
     <div className="main">
       <form
@@ -81,172 +80,194 @@ function App() {
         </h2>
 
         <button type="submit">Submit form</button>
+
         {/* Sender details */}
         <fieldset className="edit-invoice-details">
           <legend className="edit-field-title">Bill From</legend>
+          <Inputs
+            ariaLabelledBy={"sender-street-lbl"}
+            ariaInvalid={errors.senderAddress?.street ? true : false}
+            registeredName={"senderAddress.street"}
+            htmlFor={"sender-street-id"}
+            textLabel={"Street address"}
+            type={"text"}
+            id={"sender-street-id"}
+            placeholder={"116 Caledorn street"}
+            isRequired={"Street address is required"}
+            register={register}
+            errorRef={errors.senderAddress?.street}
+            errorMessage={errors.senderAddress?.street?.message?.toString()}
+          />
+          <Inputs
+            ariaLabelledBy={"sender-city-lbl"}
+            ariaInvalid={errors.senderAddress?.city ? true : false}
+            registeredName={"senderAddress.city"}
+            htmlFor={"sender-city-id"}
+            textLabel={"City"}
+            type={"text"}
+            id={"sender-city-id"}
+            placeholder={"London"}
+            isRequired={"City is required"}
+            register={register}
+            errorRef={errors.senderAddress?.city}
+            errorMessage={errors.senderAddress?.city?.message?.toString()}
+          />
 
-          <div className={`address-line street-line`}>
-            <label className="label" htmlFor={`street`}>
-              street name
-            </label>
-            <input
-              type="text"
-              id={`street`}
-              className={`input street`}
-              placeholder={`116 Caledorn street`}
-              {...register("senderAddress.street", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
+          <Inputs
+            ariaLabelledBy={"postal-lbl"}
+            ariaInvalid={errors.senderAddress?.postCode ? true : false}
+            registeredName={"senderAddress.postCode"}
+            htmlFor={"sender-postcode-id"}
+            textLabel={"Postal code"}
+            type={"text"}
+            id={"sender-postcoe-id"}
+            placeholder={"6229"}
+            isRequired={"Postal code is required"}
+            register={register}
+            errorRef={errors.senderAddress?.postCode}
+            errorMessage={errors.senderAddress?.postCode?.message?.toString()}
+          />
 
-          <div className={`address-line city-line`}>
-            <label className="label" htmlFor={`city`}>
-              City
-            </label>
-            <input
-              type="text"
-              id={`city`}
-              className={`input city`}
-              placeholder={`Uitenhage`}
-              {...register("senderAddress.city", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
-
-          <div className={`address-line postal-line`}>
-            <label className="label" htmlFor={`postal`}>
-              Postal code
-            </label>
-            <input
-              type="text"
-              id={`postal`}
-              className={`input postal`}
-              placeholder={`6229`}
-              {...register("senderAddress.postCode", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
-
-          <div className={`address-line country-line`}>
-            <label className="label" htmlFor={`country`}>
-              Country
-            </label>
-            <input
-              type="text"
-              id={`country`}
-              className={`country`}
-              placeholder={`South Africa`}
-              {...register("senderAddress.country", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
+          <Inputs
+            ariaLabelledBy={"sender-country-lbl"}
+            ariaInvalid={errors.senderAddress?.country ? true : false}
+            registeredName={"senderAddress.country"}
+            htmlFor={"sender-country-id"}
+            textLabel={"Country"}
+            type={"text"}
+            id={"sender-country-id"}
+            placeholder={"South Africa"}
+            isRequired={"Country is required"}
+            register={register}
+            errorRef={errors.senderAddress?.country}
+            errorMessage={errors.senderAddress?.country?.message?.toString()}
+          />
         </fieldset>
 
         {/* reciever */}
         <fieldset className="edit-invoice-details">
           <legend className="edit-field-title">Bill to</legend>
+          <Inputs
+            ariaLabelledBy={"client-name-lbl"}
+            ariaInvalid={errors.clientName ? true : false}
+            registeredName={"clientName"}
+            htmlFor={"client-name"}
+            textLabel={"Client name"}
+            type={"text"}
+            id={"client-name"}
+            placeholder={"Chamu Mutezva"}
+            isRequired={"Client name is required"}
+            register={register}
+            errorRef={errors.clientName}
+            errorMessage={errors.clientName?.message?.toString}
+          />
+          <Inputs
+            ariaLabelledBy={"client-email-lbl"}
+            ariaInvalid={errors.clientEmail ? true : false}
+            registeredName={"clientEmail"}
+            htmlFor={"client-email"}
+            textLabel={"Client email"}
+            type={"text"}
+            id={"client-email"}
+            placeholder={"ckmutezva@gmail.com"}
+            isRequired={"Client email is required"}
+            register={register}
+            errorRef={errors.clientEmail}
+            errorMessage={errors.clientEmail?.message?.toString}
+          />
 
-          <div className={`address-line`}>
-            <label className="label" htmlFor={`client`}>
-              Client name
-            </label>
-            <input
-              type="text"
-              id={`client`}
-              className={`input`}
-              placeholder={`Chamu mutezva`}
-              {...register("clientName", { required: true, minLength: 1 })}
-            />
-          </div>
+          <Inputs
+            ariaLabelledBy={"client-street-lbl"}
+            ariaInvalid={errors.clientAddress?.street ? true : false}
+            registeredName={"clientAddress.street"}
+            htmlFor={"client-street-id"}
+            textLabel={"Street"}
+            type={"text"}
+            id={"client-street-id"}
+            placeholder={"37 Mudzi street"}
+            isRequired={"Client street is required"}
+            register={register}
+            errorRef={errors.clientAddress?.street}
+            errorMessage={errors.clientAddress?.street?.message?.toString}
+          />
 
-          <div className={`address-line email-line`}>
-            <label className="label" htmlFor={`email`}>
-              Client name
-            </label>
-            <input
-              type="text"
-              id={`email`}
-              className={`email-address`}
-              placeholder={`mutezva@gmail.com`}
-              {...register("clientEmail", { required: true, minLength: 4 })}
-            />
-          </div>
+          <Inputs
+            ariaLabelledBy={"client-city-lbl"}
+            ariaInvalid={errors.clientAddress?.city ? true : false}
+            registeredName={"clientAddress.city"}
+            htmlFor={"client-city-id"}
+            textLabel={"City"}
+            type={"text"}
+            id={"client-city-id"}
+            placeholder={"Mudzi"}
+            isRequired={"City is required"}
+            register={register}
+            errorRef={errors.clientAddress?.city}
+            errorMessage={errors.clientAddress?.city?.message?.toString()}
+          />
 
-          <div className={`address-line street-line`}>
-            <label className="label" htmlFor={`client-street`}>
-              street name
-            </label>
-            <input
-              type="text"
-              id={`client-street`}
-              className={`input street`}
-              placeholder="19 Receiver street"
-              {...register("clientAddress.street", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
+          <Inputs
+            ariaLabelledBy={"client-postal-lbl"}
+            ariaInvalid={errors.clientAddress?.postCode ? true : false}
+            registeredName={"clientAddress.postCode"}
+            htmlFor={"client-postal-id"}
+            textLabel={"Postal code"}
+            type={"text"}
+            id={"client-postal-id"}
+            placeholder={"AE123"}
+            isRequired={"Postal code is required"}
+            register={register}
+            errorRef={errors.clientAddress?.postCode}
+            errorMessage={errors.clientAddress?.postCode?.message?.toString()}
+          />
 
-          <div className={`address-line city-line`}>
-            <label className="label" htmlFor={`client-city`}>
-              City
-            </label>
-            <input
-              type="text"
-              id={`client-city`}
-              className={`input city`}
-              placeholder={`London`}
-              {...register("clientAddress.city", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
-
-          <div className={`address-line postal-line`}>
-            <label className="label" htmlFor={`client-postal`}>
-              Postal code
-            </label>
-            <input
-              type="text"
-              id={`client-postal`}
-              className={`input postal`}
-              placeholder={`AE123`}
-              {...register("clientAddress.postCode", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
-
-          <div className={`address-line country-line`}>
-            <label className="label" htmlFor={`country`}>
-              Country
-            </label>
-            <input
-              type="text"
-              id={`country`}
-              className={`country`}
-              placeholder={`South Africa`}
-              {...register("clientAddress.country", {
-                required: true,
-                minLength: 4,
-              })}
-            />
-          </div>
+          <Inputs
+            ariaLabelledBy={"client-country-lbl"}
+            ariaInvalid={errors.clientAddress?.country ? true : false}
+            registeredName={"clientAddress.country"}
+            htmlFor={"client-country-id"}
+            textLabel={"Country"}
+            type={"text"}
+            id={"client-country-id"}
+            placeholder={"United Kingdom"}
+            isRequired={"Country is required"}
+            register={register}
+            errorRef={errors.clientAddress?.country}
+            errorMessage={errors.clientAddress?.city?.message?.toString()}
+          />
         </fieldset>
 
         <fieldset className="edit-invoice-details">
           <div className={`invoice-date`}>
+            <Inputs
+              ariaLabelledBy={"sender-city-lbl"}
+              ariaInvalid={errors.senderAddress?.city ? true : false}
+              registeredName={"senderAddress.city"}
+              htmlFor={"sender-city-id"}
+              textLabel={"City"}
+              type={"text"}
+              id={"sender-city-id"}
+              placeholder={"London"}
+              isRequired={"City is required"}
+              register={register}
+              errorRef={errors.senderAddress?.city}
+              errorMessage={errors.senderAddress?.city?.message?.toString()}
+            />
+
+            <Inputs
+              ariaLabelledBy={"created-at-lbl"}
+              ariaInvalid={errors.paymentDue ? true : false}
+              registeredName={"Created at"}
+              htmlFor={"created-id"}
+              textLabel={"Invoice date"}
+              type={"date"}
+              id={"created-id"}
+              placeholder={""}
+              isRequired={"Date is required"}
+              register={register}
+              errorRef={errors.createdAt}
+              errorMessage={errors.createdAt?.message?.toString()}
+            />
             <label className="label" htmlFor={`date`}>
               Invoice date
             </label>
@@ -381,3 +402,21 @@ function App() {
 }
 
 export default App;
+
+/*
+ <div className={`address-line street-line`}>
+            <label className="label" htmlFor={`street`}>
+              street name
+            </label>
+            <input
+              type="text"
+              id={`street`}
+              className={`input street`}
+              placeholder={`116 Caledorn street`}
+              {...register("senderAddress.street", {
+                required: true,
+                minLength: 4,
+              })}
+            />
+          </div>
+*/
