@@ -159,7 +159,7 @@ function App() {
             isRequired={"Client name is required"}
             register={register}
             errorRef={errors.clientName}
-            errorMessage={errors.clientName?.message?.toString}
+            errorMessage={errors.clientName?.message?.toString()}
           />
           <Inputs
             ariaLabelledBy={"client-email-lbl"}
@@ -239,21 +239,7 @@ function App() {
 
         <fieldset className="edit-invoice-details">
           <div className={`invoice-date`}>
-            <Inputs
-              ariaLabelledBy={"sender-city-lbl"}
-              ariaInvalid={errors.senderAddress?.city ? true : false}
-              registeredName={"senderAddress.city"}
-              htmlFor={"sender-city-id"}
-              textLabel={"City"}
-              type={"text"}
-              id={"sender-city-id"}
-              placeholder={"London"}
-              isRequired={"City is required"}
-              register={register}
-              errorRef={errors.senderAddress?.city}
-              errorMessage={errors.senderAddress?.city?.message?.toString()}
-            />
-
+            
             <Inputs
               ariaLabelledBy={"created-at-lbl"}
               ariaInvalid={errors.paymentDue ? true : false}
@@ -267,17 +253,7 @@ function App() {
               register={register}
               errorRef={errors.createdAt}
               errorMessage={errors.createdAt?.message?.toString()}
-            />
-            <label className="label" htmlFor={`date`}>
-              Invoice date
-            </label>
-            <input
-              type="date"
-              id={`date`}
-              className={`date-signed`}
-              placeholder={""}
-              {...register("paymentDue")}
-            />
+            />            
           </div>
 
           <div className="payment-terms">
