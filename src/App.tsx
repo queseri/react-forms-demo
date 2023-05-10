@@ -8,7 +8,7 @@ function App() {
   //const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
   // const onSubmit = data => console.log(data);
   const invoice = dataList;
-  // console.log(invoice);
+   console.log(invoice);
   const initialState = {
     id: invoice.id,
     createdAt: invoice.createdAt,
