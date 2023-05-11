@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import add  from "date-fns/add";
+import add from "date-fns/add";
 import format from "date-fns/format";
 import CustomInput from "./components/CustomInput";
 import CustomSelect from "./components/CustomSelect";
@@ -24,12 +24,20 @@ type FormValues = {
   createdAt: string;
   description: string;
   paymentTerms: any;
-  paymentDue: Date;
+  paymentDue: string;
+  items: ICosting[];
 };
+
+export interface ICosting {
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
 
 const AppController = () => {
   const invoice = dataList;
-  const initialState = {
+  const initialState: FormValues = {
     senderAddress: {
       street: invoice.senderAddress.street,
       postal: invoice.senderAddress.postCode,
@@ -44,10 +52,11 @@ const AppController = () => {
     },
     clientName: invoice.clientName,
     clientEmail: invoice.clientEmail,
-    createdAt: format(new Date(invoice.createdAt), "yyyy/MM/dd"),
+    createdAt: format(new Date(invoice.createdAt), "yyyy-MM-dd"),
     description: invoice.description,
     paymentTerms: 1,
-    paymentDue: new Date(invoice.paymentDue),
+    paymentDue: format(new Date(invoice.paymentDue), "yyyy-MM-dd"),
+    items: invoice.items,
   };
 
   const { control, handleSubmit, watch, setValue } = useForm<FormValues>({
@@ -55,25 +64,42 @@ const AppController = () => {
   });
 
   const payment = watch("paymentTerms");
-  console.log(payment);
+  const itemsWatch = watch("items");
+  //  console.log(payment)
+  //  console.log(itemsWatch);
 
   useEffect(() => {
     // update the days when payment terms have been selected
     switch (payment) {
-      case 1:
-        setValue("paymentDue", add(Date.now(), { days: 1 }));
+      case "1":
+        setValue(
+          "paymentDue",
+          format(add(Date.now(), { days: 1 }), "yyyy-MM-dd")
+        );
         break;
-      case 6:
-        setValue("paymentDue", add(Date.now(), { days: 6 }));
+      case "6":
+        setValue(
+          "paymentDue",
+          format(add(Date.now(), { days: 6 }), "yyyy-MM-dd")
+        );
         break;
-      case 7:
-        setValue("paymentDue", add(Date.now(), { days: 7 }));
+      case "7":
+        setValue(
+          "paymentDue",
+          format(add(Date.now(), { days: 7 }), "yyyy-MM-dd")
+        );
         break;
-      case 14:
-        setValue("paymentDue", add(Date.now(), { days: 14 }));
+      case "14":
+        setValue(
+          "paymentDue",
+          format(add(Date.now(), { days: 14 }), "yyyy-MM-dd")
+        );
         break;
       default:
-        setValue("paymentDue", add(Date.now(), { days: 30 }));
+        setValue(
+          "paymentDue",
+          format(add(Date.now(), { days: 30 }), "yyyy-MM-dd")
+        );
     }
     console.log(payment);
     console.log(invoice.paymentDue);
@@ -230,6 +256,10 @@ const AppController = () => {
             },
           }}
         />
+      </fieldset>
+
+      <fieldset>
+        <legend>Invoice details</legend>
         <CustomSelect
           name="paymentTerms"
           control={control}
@@ -242,9 +272,6 @@ const AppController = () => {
             { value: 30, label: "Net 30 days" },
           ]}
         />
-      </fieldset>
-      <fieldset>
-        <legend>Invoice details</legend>
         <CustomInput
           type="date"
           name="createdAt"
@@ -254,7 +281,19 @@ const AppController = () => {
             required: "Date is required",
           }}
         />
+        <CustomInput
+          type="date"
+          name="paymentDue"
+          labelText="Due Date"
+          control={control}
+          rules={{
+            required: "Date is required",
+          }}
+        />
+      </fieldset>
 
+      <fieldset>
+        <legend>Item list</legend>
         <CustomInput
           type="text"
           name="description"
@@ -269,6 +308,58 @@ const AppController = () => {
             },
           }}
         />
+        {invoice.items.map((item, index) => (
+          <div key={item.name}>
+            <CustomInput
+              type="text"
+              name={`items.${index}.name`}
+              labelText="Project name"
+              control={control}
+              rules={{
+                required: "Project name is required",
+                minLength: { value: 4, message: "must be greater than 4" },
+                maxLength: {
+                  value: 40,
+                  message: "Project name  must be less than 40",
+                },
+              }}
+            />
+            <CustomInput
+              type="number"
+              name={`items.${index}.quantity`}
+              labelText="Qty"
+              control={control}
+              rules={{
+                required: "Quantity is required",
+                min: { value: 1, message: "Quantity must be greater than 0" },
+                max: {
+                  value: 100,
+                  message: "Quantity  must be less than 100",
+                },
+              }}
+            />
+            <CustomInput
+              type="number"
+              name={`items.${index}.price`}
+              labelText="Price"
+              control={control}
+              rules={{
+                required: "Price is required",
+                min: { value: 0, message: "Price must be greater than 0" },
+              }}
+            />
+            <CustomInput
+              type="number"
+              name={`items.${index}.total`}
+              labelText="Total"
+              control={control}
+              rules={{
+                required: "Total is required",
+                min: { value: 0, message: "Total must be greater than 0" },
+              }}
+            />
+          </div>
+        ))}
       </fieldset>
       <button type="submit">Submit</button>
     </form>

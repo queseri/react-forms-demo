@@ -1,6 +1,5 @@
-// CustomInput.tsx
 import React from "react";
-import { useController, Control } from "react-hook-form";
+import { useController } from "react-hook-form";
 
 type FormValues = {
   name: string;
