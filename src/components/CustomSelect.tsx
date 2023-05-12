@@ -1,10 +1,5 @@
 import React from "react";
-import { useController, Control } from "react-hook-form";
-
-type FormValues = {
-  name: string;
-  paymentTerms: string;
-};
+import { useController } from "react-hook-form";
 
 type CustomSelectProps = {
   name: string;
