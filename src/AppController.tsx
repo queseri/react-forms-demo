@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import add from "date-fns/add";
 import format from "date-fns/format";
+import {reducer} from "./components/useReducer";
 import CustomInput from "./components/CustomInput";
 import CustomSelect from "./components/CustomSelect";
 import dataList from "./data.json";
@@ -66,7 +67,7 @@ const AppController = () => {
   const payment = watch("paymentTerms");
   const itemsWatch = watch("items");
   //  console.log(payment)
-  //  console.log(itemsWatch);
+   console.log(itemsWatch);
 
   useEffect(() => {
     // update the days when payment terms have been selected
